@@ -1,0 +1,18 @@
+#!/bin/sh
+# require antiword and pandoc
+
+if [ $# -eq 0 ]; then
+  echo "Need argument(s): doc or docx file(s)" 1>&2
+  exit 1
+fi
+
+for i in $*
+do
+    ext="${i##*.}"
+    case $ext in
+        doc)  antiword -w 0 ${i} ;;
+        docx) pandoc -t plain ${i} ;;
+        *)    ;;
+    esac
+done
+
