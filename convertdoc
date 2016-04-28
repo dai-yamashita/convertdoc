@@ -1,8 +1,8 @@
 #!/bin/sh
-# require antiword and pandoc
+# require antiword (.doc), pandoc (.docx) and pdftotext (.pdf)
 
 if [ $# -eq 0 ]; then
-  echo "Need argument(s): doc or docx file(s)" 1>&2
+  echo "Need argument(s): doc, docx or pdf file(s)" 1>&2
   exit 1
 fi
 
@@ -12,6 +12,9 @@ do
     case $ext in
         doc)  antiword -w 0 ${i} ;;
         docx) pandoc -t plain ${i} ;;
+        pdf ) pdftotext -raw ${i} /tmp/convertdoc ;
+              cat /tmp/convertdoc ;
+              rm -f /tmp/convertdoc ;;
         *)    ;;
     esac
 done
