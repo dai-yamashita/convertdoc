@@ -8,14 +8,17 @@ fi
 
 for i in $*
 do
-    ext="${i##*.}"
-    case $ext in
-        doc)  antiword -w 0 ${i} ;;
-        docx) pandoc -t plain ${i} ;;
-        pdf ) pdftotext -raw ${i} /tmp/convertdoc ;
-              cat /tmp/convertdoc ;
-              rm -f /tmp/convertdoc ;;
-        *)    ;;
-    esac
+    if [ -f ${i} ]
+    then
+       ext="${i##*.}"
+       case $ext in
+           doc)  antiword -w 0 ${i} ;;
+           docx) pandoc -t plain ${i} ;;
+           pdf ) pdftotext -raw ${i} /tmp/convertdoc ;
+                 cat /tmp/convertdoc ;
+                 rm -f /tmp/convertdoc ;;
+           *)    ;;
+       esac
+    fi
 done
 
