@@ -12,9 +12,9 @@ do
     then
        ext="${i##*.}"
        case $ext in
-           doc)  antiword -w 0 ${i} ;;
-           docx) pandoc -t plain ${i} ;;
-           pdf ) pdftotext -raw ${i} - ;;
+           doc) antiword -w 0 ${i} ;;
+           docx|odt|html|htm|tex) pandoc -t plain ${i} ;;
+           pdf) pdftotext -raw ${i} - ;;
            *)    ;;
        esac
     fi
