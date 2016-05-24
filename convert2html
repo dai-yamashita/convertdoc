@@ -1,0 +1,28 @@
+#!/bin/sh
+# require wvHtml (doc)
+# require pandoc (docx/odt)
+# require gnumeric (xls/xlsx/ods)
+
+set -e
+
+if [ $# -eq 0 ]; then
+  echo "Need argument(s): doc(x)/odt/xls(x)/ods file" 1>&2
+  exit 1
+fi
+
+i=$1
+
+if [ -f ${i} ]
+then
+   ext="${i##*.}"
+   case $ext in
+       doc) wvHtml ${i} - | pandoc -f html -t html ;;
+       docx|odt) pandoc ${i} -t html ;;
+       xls|xlsx|ods) tmpfile=$(mktemp).html ;
+                     ssconvert -T Gnumeric_html:xhtml \
+                               ${i} ${tmpfile} 2> /dev/null ;
+                     cat ${tmpfile} ;
+                     rm -f ${tmpfile} ;;
+       *)    ;;
+   esac
+fi

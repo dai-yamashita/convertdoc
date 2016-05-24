@@ -1,13 +1,13 @@
 #!/bin/sh
-# require pdftotext (.pdf)
-# require antiword (.doc)
-# require pandoc (.docx/.odt/.html)
-# require gnumeric (.xls/.xlsx)
+# require pdftotext (pdf)
+# require antiword (doc)
+# require pandoc (docx/odt/html/tex)
+# require gnumeric and w3m (xls/xlsx)
 
 set -e
 
 if [ $# -eq 0 ]; then
-  echo "Need argument(s): doc, docx or pdf file(s)" 1>&2
+  echo "Need argument(s): pdf, doc(x), xls(x) or ... file(s)" 1>&2
   exit 1
 fi
 
