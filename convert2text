@@ -11,17 +11,18 @@ if [ $# -eq 0 ]; then
   exit 1
 fi
 
-for i in $*
+for i in "$*"
 do
-    if [ -f ${i} ]
+    if [ -f "${i}" ]
     then
        ext="${i##*.}"
        case $ext in
-           pdf) pdftotext -raw ${i} - ;;
-           doc) LANG=ja_JP.utf8 antiword -w 0 ${i} ;;
-           docx|odt|html|htm|tex) pandoc -t plain ${i} ;;
+           pdf) pdftotext -raw "${i}" - ;;
+           doc) LANG=ja_JP.utf8 antiword -w 0 "${i}" ;;
+           docx|odt|html|htm|tex) pandoc -t plain "${i}" ;;
            xls|xlsx|ods) tmpfile=$(mktemp).html ;
-                         ssconvert -T Gnumeric_html:xhtml ${i} ${tmpfile} 2> /dev/null ;
+                         ssconvert -T Gnumeric_html:xhtml "${i}" \
+                                   ${tmpfile} 2> /dev/null ;
                          w3m -dump ${tmpfile} ;
                          rm -f ${tmpfile} ;;
            *)    ;;
