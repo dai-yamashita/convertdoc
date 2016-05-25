@@ -1,7 +1,7 @@
 #!/bin/sh
 # require wvHtml (doc)
 # require pandoc (docx/odt)
-# require gnumeric (xls/xlsx/ods)
+# require libreoffice (xls/xlsx/ods)
 
 set -e
 
@@ -11,18 +11,25 @@ if [ $# -eq 0 ]; then
 fi
 
 i=$1
+basename=${i##*/}
+filename=${basename%.*}
+tmpdir=/tmp/convertdoc ;
 
-if [ -f ${i} ]
+if [ -f "${i}" ]
 then
-   ext="${i##*.}"
-   case $ext in
-       doc) wvHtml ${i} - | pandoc -f html -t html ;;
-       docx|odt) pandoc ${i} -t html ;;
-       xls|xlsx|ods) tmpfile=$(mktemp).html ;
-                     ssconvert -T Gnumeric_html:xhtml \
-                               ${i} ${tmpfile} 2> /dev/null ;
-                     cat ${tmpfile} ;
-                     rm -f ${tmpfile} ;;
-       *)    ;;
+    ext="${i##*.}"
+    case $ext in
+        doc) wvHtml "${i}" - | pandoc -f html -t html ;;
+        docx|odt) \
+            pandoc "${i}" -t html ;;
+            # libreoffice --headless --convert-to doc \
+            #             --outdir ${tmpdir} "${i}" > /dev/null ;
+            # wvHtml ${tmpdir}/"${filename}.doc" - | pandoc -f html -t html ;;
+        xls|xlsx|ods) \
+            libreoffice --headless --convert-to html \
+                        --outdir ${tmpdir} "${i}" > /dev/null ;
+            cat ${tmpdir}/"${filename}.html" ;
+            rm -f ${tmpfile} ;;
+       *) ;;
    esac
 fi
