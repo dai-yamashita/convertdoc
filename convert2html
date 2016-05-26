@@ -15,7 +15,7 @@ basename="${i##*/}"
 filename="${basename%.*}"
 tmpdir=/tmp/convertdoc ;
 
-if [ -f "${i}" ]
+if [ -f ${i} ]
 then
     ext="${i##*.}"
     case $ext in

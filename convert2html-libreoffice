@@ -1,0 +1,29 @@
+#!/bin/sh
+# require libreoffice
+
+set -e
+
+if [ $# -eq 0 ]; then
+  echo "Need argument(s): doc(x)/odt/xls(x)/ods file" 1>&2
+  exit 1
+fi
+
+i=$1
+
+if [ -f ${i} ]
+then
+    ext="${i##*.}"
+    case $ext in
+        doc|docx|odt|xls|xlsx|ods) \
+            basename="${i##*/}"
+            filename="${basename%.*}"
+            tmpdir=/tmp/convertdoc
+
+            libreoffice --headless --convert-to html \
+                        --outdir ${tmpdir} "${i}" > /dev/null
+            cat "${tmpdir}/${filename}.html"
+            rm -f ${tmpfile}
+            ;;
+       *) ;;
+   esac
+fi
