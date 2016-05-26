@@ -29,7 +29,7 @@ then
             libreoffice --headless --convert-to html \
                         --outdir ${tmpdir} "${i}" > /dev/null ;
             cat ${tmpdir}/"${filename}.html" ;
-            rm -rf ${tmpfile} ;;
+            rm -rf ${tmpdir} ;;
        *) ;;
    esac
 fi

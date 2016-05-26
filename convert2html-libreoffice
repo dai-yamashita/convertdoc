@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # require libreoffice
 
 set -e
@@ -12,17 +12,17 @@ i=$1
 
 if [ -f ${i} ]
 then
-    ext="${i##*.}"
+    ext=${i##*.}
     case $ext in
         doc|docx|odt|xls|xlsx|ods) \
-            basename="${i##*/}"
-            filename="${basename%.*}"
+            basename=${i##*/}
+            filename=${basename%.*}
             tmpdir=/tmp/convertdoc
 
             libreoffice --headless --convert-to html \
-                        --outdir ${tmpdir} "${i}" > /dev/null
-            cat "${tmpdir}/${filename}.html"
-            rm -rf ${tmpfile}
+                        --outdir ${tmpdir} ${i} > /dev/null
+            cat ${tmpdir}/${filename}.html
+            rm -rf ${tmpdir}
             ;;
        *) ;;
    esac
