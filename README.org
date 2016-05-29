@@ -1,0 +1,27 @@
+* DESCRIPTION
+Mewで以下の形式の添付ファイルを見るためのスクリプト
+- doc/docx/odt
+- xls/xlsx/ods
+
+** Requirements
+- convert2text
+  - wvText
+  - pandoc
+  - libreoffice
+- convert2html
+  - wxHtml
+  - pandoc
+  - libreoffice
+- convert2html-libreoffice
+  - libreoffice
+
+** Usage
+1. convert.el をEmacsのパスの通っている場所に保存する。
+2. 必要に応じて convert-setting.el の設定をする。
+3. Mew の添付ファイルを開く時に M-x mew-summary-display-with-convert2html
+   を実行する（2.の設定では"c"に割り当てている）。
+
+** ToDo (?)
+他の形式のファイルを変換できるようにする。
+- html形式で出力することができれば基本的に可能
+- その場合は convert2html に追加
